@@ -125,35 +125,35 @@ export default function Home() {
       {!isJokeRevealed ? (
         <>
           <h1 className="text-5xl mb-6 animate-pulse text-red-500">
-            ⚠️ ¡ALERTA! SISTEMA COMPROMETIDO ⚠️
+             ¡ALERTA! SISTEMA COMPROMETIDO
           </h1>
           <div className="text-lg space-y-4">
             <p>
-              📍 <span className="font-bold text-red-500">Ubicación:</span>{" "}
+               <span className="font-bold text-red-500">Ubicación:</span>{" "}
               <span>{data.location}</span>
             </p>
             <p>
-              🔗 <span className="font-bold text-red-500">Dirección IP:</span>{" "}
+               <span className="font-bold text-red-500">Dirección IP:</span>{" "}
               <span>{data.ip}</span>
             </p>
             <p>
-              📡 <span className="font-bold text-red-500">Proveedor de Internet:</span>{" "}
+               <span className="font-bold text-red-500">Proveedor de Internet:</span>{" "}
               <span>{data.isp}</span>
             </p>
             <p>
-              💻 <span className="font-bold text-red-500">Sistema Operativo:</span>{" "}
+               <span className="font-bold text-red-500">Sistema Operativo:</span>{" "}
               <span>{data.os}</span>
             </p>
             <p>
-              🌐 <span className="font-bold text-red-500">Navegador:</span>{" "}
+               <span className="font-bold text-red-500">Navegador:</span>{" "}
               <span>{data.browser}</span>
             </p>
             <p>
-              🖥️ <span className="font-bold text-red-500">Resolución de pantalla:</span>{" "}
+               <span className="font-bold text-red-500">Resolución de pantalla:</span>{" "}
               <span>{data.screen}</span>
             </p>
             <p>
-              🌐 <span className="font-bold text-red-500">Idioma:</span>{" "}
+               <span className="font-bold text-red-500">Idioma:</span>{" "}
               <span>{data.language}</span>
             </p>
           </div>
@@ -168,7 +168,7 @@ export default function Home() {
             </ul>
           </div>
           <div className="mt-6 text-red-500 font-bold text-xl">
-            ⚠️ BLOQUEO EN: {countdown} SEGUNDOS
+             BLOQUEO EN: {countdown} SEGUNDOS
           </div>
           <div className="mt-6 text-sm space-y-1">
             {hackingMessages.map((msg, index) => (
