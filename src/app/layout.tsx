@@ -15,7 +15,7 @@ const robotoMono = Roboto_Mono({
 
 export const metadata: Metadata = {
   title: "Sistema comprometido",
-  description: "Es solo una broma",
+  description: "asd",
   icons: {
     icon: "/hacked.png", // Cambia el icono según tu diseño
   },

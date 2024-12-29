@@ -172,7 +172,7 @@ export default function Home() {
           </div>
           <div className="mt-6 text-sm space-y-1">
             {hackingMessages.map((msg, index) => (
-              <p key={index} className="animate-zoom text-yellow-500">
+              <p key={index} className=" text-yellow-500">
                 {msg}
               </p>
             ))}
