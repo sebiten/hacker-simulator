@@ -73,7 +73,7 @@ export default function Home() {
         <p>🕒 Hora actual: <span className="font-bold">{data.time || "Detectando..."}</span></p>
       </div>
       <p className="mt-10 text-sm text-gray-400 animate-bounce">
-        Relájate, esto es solo una broma. 😄
+        Tranqui, esto es solo una broma. 😄
       </p>
     </div>
   );
