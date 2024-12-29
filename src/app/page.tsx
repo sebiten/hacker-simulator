@@ -27,10 +27,11 @@ export default function Home() {
   });
 
   const [passwords, setPasswords] = useState<string[]>([]);
-  const [countdown, setCountdown] = useState<number>(10);
+  const [countdown, setCountdown] = useState<number>(20);
+  const [hackingMessages, setHackingMessages] = useState<string[]>([]);
+  const [isJokeRevealed, setIsJokeRevealed] = useState<boolean>(false);
 
   useEffect(() => {
-    // Obtener datos del navegador
     const userAgent = window.navigator.userAgent;
     const os = /Windows/.test(userAgent)
       ? "Windows"
@@ -49,7 +50,6 @@ export default function Home() {
     const screenResolution = `${window.screen.width}x${window.screen.height}`;
     const language = navigator.language || "No detectado";
 
-    // Obtener localización por IP
     fetch("https://ipapi.co/json/")
       .then((res) => res.json())
       .then((locationData) => {
@@ -69,13 +69,11 @@ export default function Home() {
         }));
       });
 
-    // Simular contraseñas hackeadas
     const fakePasswords = Array.from({ length: 5 }, () =>
       Math.random().toString(36).slice(-8)
     );
     setPasswords(fakePasswords);
 
-    // Actualizar el estado con OS, Browser, Screen y Language
     setData((prev) => ({
       ...prev,
       os,
@@ -85,75 +83,109 @@ export default function Home() {
       referrer: document.referrer || "Sin historial detectado",
     }));
 
-    // Actualizar la hora en el cliente
     const updateTime = () => {
       setData((prev) => ({
         ...prev,
         time: new Date().toLocaleTimeString(),
       }));
     };
-    updateTime(); // Inicializar la hora
+    updateTime();
     const interval = setInterval(updateTime, 1000);
 
-    // Cuenta regresiva
     const countdownInterval = setInterval(() => {
-      setCountdown((prev) => (prev > 0 ? prev - 1 : 0));
+      setCountdown((prev) => {
+        if (prev === 1) {
+          clearInterval(countdownInterval);
+          setIsJokeRevealed(true);
+        }
+        return prev > 0 ? prev - 1 : 0;
+      });
     }, 1000);
 
+    const hackingMessagesInterval = setInterval(() => {
+      setHackingMessages((prev) => [
+        ...prev,
+        `Extrayendo datos sensibles... ${Math.random().toString(36).slice(-8)}`,
+      ]);
+    }, 1500);
+
     return () => {
-      clearInterval(interval); // Limpiar interval de la hora
-      clearInterval(countdownInterval); // Limpiar interval de la cuenta regresiva
+      clearInterval(interval);
+      clearInterval(countdownInterval);
+      clearInterval(hackingMessagesInterval);
     };
   }, []);
 
   return (
-    <div className="h-screen flex flex-col justify-center items-center bg-black text-green-500">
-      <h1 className="text-4xl mb-6 animate-pulse">⚠️ Sistema comprometido ⚠️</h1>
-      <div className="text-lg space-y-4">
-        <p>
-          📍 Ubicación: <span className="font-bold">{data.location}</span>
-        </p>
-        <p>
-          🔗 Dirección IP: <span className="font-bold">{data.ip}</span>
-        </p>
-        <p>
-          📡 Proveedor de Internet: <span className="font-bold">{data.isp}</span>
-        </p>
-        <p>
-          💻 Sistema Operativo: <span className="font-bold">{data.os}</span>
-        </p>
-        <p>
-          🌐 Navegador: <span className="font-bold">{data.browser}</span>
-        </p>
-        <p>
-          🖥️ Resolución de pantalla: <span className="font-bold">{data.screen}</span>
-        </p>
-        <p>
-          🌐 Idioma del sistema: <span className="font-bold">{data.language}</span>
-        </p>
-        <p>
-          🕵️ Último sitio visitado: <span className="font-bold">{data.referrer}</span>
-        </p>
-        <p>
-          🕒 Hora actual: <span className="font-bold">{data.time || "Detectando..."}</span>
-        </p>
-      </div>
-      <div className="mt-6">
-        <h2 className="text-xl">🔒 Contraseñas comprometidas:</h2>
-        <ul className="mt-2 space-y-1">
-          {passwords.map((pass, index) => (
-            <li key={index} className="font-bold">
-              {`• ${pass}`}
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div className="mt-6 text-red-500 font-bold text-xl">
-        ⚠️ Bloqueo del sistema en: {countdown} segundos
-      </div>
-      <p className="mt-10 text-sm text-gray-400 animate-bounce">
-        Relájate, esto es solo una broma. 😄
-      </p>
+    <div
+      className={`h-screen flex flex-col justify-center items-center ${
+        isJokeRevealed ? "bg-green-900 text-white" : "bg-black text-green-500"
+      }`}
+    >
+      {!isJokeRevealed ? (
+        <>
+          <h1 className="text-5xl mb-6 animate-pulse text-red-500">
+            ⚠️ ¡ALERTA! SISTEMA COMPROMETIDO ⚠️
+          </h1>
+          <div className="text-lg space-y-4">
+            <p>
+              📍 <span className="font-bold text-red-500">Ubicación:</span>{" "}
+              <span>{data.location}</span>
+            </p>
+            <p>
+              🔗 <span className="font-bold text-red-500">Dirección IP:</span>{" "}
+              <span>{data.ip}</span>
+            </p>
+            <p>
+              📡 <span className="font-bold text-red-500">Proveedor de Internet:</span>{" "}
+              <span>{data.isp}</span>
+            </p>
+            <p>
+              💻 <span className="font-bold text-red-500">Sistema Operativo:</span>{" "}
+              <span>{data.os}</span>
+            </p>
+            <p>
+              🌐 <span className="font-bold text-red-500">Navegador:</span>{" "}
+              <span>{data.browser}</span>
+            </p>
+            <p>
+              🖥️ <span className="font-bold text-red-500">Resolución de pantalla:</span>{" "}
+              <span>{data.screen}</span>
+            </p>
+            <p>
+              🌐 <span className="font-bold text-red-500">Idioma:</span>{" "}
+              <span>{data.language}</span>
+            </p>
+          </div>
+          <div className="mt-6">
+            <h2 className="text-xl text-red-500">🔒 Contraseñas comprometidas:</h2>
+            <ul className="mt-2 space-y-1">
+              {passwords.map((pass, index) => (
+                <li key={index} className="font-bold">
+                  {`• ${pass}`}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="mt-6 text-red-500 font-bold text-xl">
+            ⚠️ BLOQUEO EN: {countdown} SEGUNDOS
+          </div>
+          <div className="mt-6 text-sm space-y-1">
+            {hackingMessages.map((msg, index) => (
+              <p key={index} className="animate-zoom text-yellow-500">
+                {msg}
+              </p>
+            ))}
+          </div>
+        </>
+      ) : (
+        <div className="text-center">
+          <h1 className="text-4xl font-bold mb-6">¡Es solo una broma! 😄</h1>
+          <p className="text-lg">
+            Tu sistema no está comprometido. Esto fue una simulación para asustarte un poco.
+          </p>
+        </div>
+      )}
     </div>
   );
 }
